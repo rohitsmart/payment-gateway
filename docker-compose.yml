@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    image: club-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_DATABASE=club
+      - MYSQL_USER=rohit
+      - MYSQL_PASSWORD=Rohit@123
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  # Required for MySQL container to start
+      MYSQL_DATABASE: club
+      MYSQL_USER: rohit
+      MYSQL_PASSWORD: Rohit@123
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
